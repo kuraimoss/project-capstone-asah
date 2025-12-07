@@ -15,9 +15,7 @@
 
 - **Framework:** [React.js](https://react.dev/) + [Vite](https://vitejs.dev/)
 - **Language:** JavaScript (JSX)
-- **Styling:** [CSS / Tailwind CSS - sesuaikan dengan yang kamu pakai]
-- **HTTP Client:** Axios / Fetch (untuk koneksi ke Back-End)
-- **State Management:** React Context / Redux (Opsional)
+- **Styling:** [CSS / Tailwind CSS]
 
 ---
 
@@ -48,7 +46,7 @@ npm install
 
 ## 🤝 Panduan Kolaborasi Git (WAJIB DIBACA TIM) ⚠️
 
-Agar kode tidak bentrok dan tetap rapi, kita menggunakan alur kerja (_workflow_) berikut. Mohon dipatuhi oleh tim Back-End dan ML saat integrasi.
+Agar kode tidak bentrok dan tetap rapi, kita menggunakan alur kerja (_workflow_) berikut. Tolong dibacanya tim Back-End dan ML.
 
 ### 🌿 Struktur Branch
 
@@ -102,5 +100,5 @@ Agar kode tidak bentrok dan tetap rapi, kita menggunakan alur kerja (_workflow_)
     - Klik **Create Pull Request**.
 
 3.  **Review & Merge:**
-    - Beritahu tim di grup (WhatsApp/Discord) untuk mengecek PR kalian.
+    - Beritahu tim di grup untuk mengecek hasil code kalian.
     - Jika sudah oke, Admin/Lead akan melakukan **Merge** ke `develop`.
