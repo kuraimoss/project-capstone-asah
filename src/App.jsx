@@ -289,14 +289,24 @@ const processCSVDataWithPredictions = async (csvData) => {
   return { machines, historyByMachine, stats };
 };
 
-// Load CSV + prediksi LSTM + stats
-const loadCSVDataWithPredictions = async () => {
+// Load data from REST API + prediksi LSTM + stats
+const loadDatabaseDataWithPredictions = async () => {
   try {
-    const response = await fetch("/datasets.csv");
-    const csvData = await response.text();
+    // Fetch machine data from backend API
+    const response = await fetch("http://localhost:3001/api/machines");
+    
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    
+    const databaseData = await response.json();
+    
+    // Convert API data to CSV-like format for processing
+    const csvData = convertDatabaseDataToCSV(databaseData);
+    
     return await processCSVDataWithPredictions(csvData);
   } catch (error) {
-    console.error("Error loading CSV data with predictions:", error);
+    console.error("Error loading data from API:", error);
     // Fallback bila gagal load (dummy, tapi seharusnya tidak kepakai)
     const mockMachines = [
       {
@@ -325,6 +335,23 @@ const loadCSVDataWithPredictions = async () => {
       },
     };
   }
+};
+
+// Convert database JSON data to CSV format for compatibility with existing processing
+const convertDatabaseDataToCSV = (databaseData) => {
+  if (!databaseData || databaseData.length === 0) {
+    return "datetime,machineID,volt,rotate,pressure,vibration,model,age,failure,errorID,comp";
+  }
+  
+  // Create CSV header
+  let csv = "datetime,machineID,volt,rotate,pressure,vibration,model,age,failure,errorID,comp\n";
+  
+  // Add each record as CSV line
+  databaseData.forEach(record => {
+    csv += `${record.datetime},${record.machine_id},${record.volt},${record.rotate},${record.pressure},${record.vibration},${record.model},${record.age},${record.failure},${record.error_id},${record.component}\n`;
+  });
+  
+  return csv;
 };
 
 // ------------------------
@@ -729,22 +756,22 @@ export default function App() {
   const [machineHistory, setMachineHistory] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Load CSV + prediksi LSTM saat mount
+  // Load database data + prediksi LSTM saat mount
   useEffect(() => {
     const loadData = async () => {
       try {
         const {
-          machines: machinesFromCsv,
+          machines: machinesFromDb,
           historyByMachine,
           stats,
-        } = await loadCSVDataWithPredictions();
+        } = await loadDatabaseDataWithPredictions();
 
-        setMachines(machinesFromCsv);
+        setMachines(machinesFromDb);
         setMachineHistory(historyByMachine);
         setDashboardStats(stats);
 
-        if (machinesFromCsv.length > 0) {
-          const first = machinesFromCsv[0];
+        if (machinesFromDb.length > 0) {
+          const first = machinesFromDb[0];
           setSelectedMachine(first);
           const history = historyByMachine[first.uid];
           setChartData(history && history.length ? history : generateHistory());

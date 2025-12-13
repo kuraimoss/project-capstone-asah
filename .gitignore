@@ -26,3 +26,8 @@ dist-ssr
 # Large files
 Asah-Capstone-Predictive-Maintenance-Copilot.rar
 public/datasets.csv
+
+# Environment files
+.env
+.env.local
+.env.*.local
