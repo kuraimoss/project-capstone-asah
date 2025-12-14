@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "server": "node server.cjs",
     "setup-db": "node setup_db.cjs",
     "import-data": "node import_data.cjs"
   },

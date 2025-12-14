@@ -114,11 +114,19 @@ This will import the complete dataset from `complete_database_setup.sql` which i
 
 #### 6. Start the Development Server
 
+**Backend Server (required, run first):**
+```bash
+npm run server
+```
+
+The backend API will run on `http://localhost:3001`
+
+**Frontend (in a separate terminal):**
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The frontend application will be available at `http://localhost:5173`
 
 ## 🛠️ Database Schema
 
@@ -182,6 +190,7 @@ This includes:
 │   └── App.css              # Main styles
 ├── database_schema.sql      # Database schema definition
 ├── complete_database_setup.sql # Complete dataset with sample data
+├── server.cjs               # Backend API server
 ├── setup_db.cjs             # Database setup script
 ├── import_data.cjs          # Data import script
 ├── db.config.cjs            # Database configuration
@@ -194,7 +203,8 @@ This includes:
 
 | Script | Description |
 |--------|-------------|
-| `npm run dev` | Start development server |
+| `npm run dev` | Start frontend development server |
+| `npm run server` | Start backend API server |
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
 | `npm run lint` | Run ESLint |
